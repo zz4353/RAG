@@ -1,0 +1,11 @@
+# Uncomment and complete if you want to use Ollama
+LLM_TYPE= ollama
+CHAT_MODEL = gemma3:1b
+
+# Qdrant
+QDRANT_HOST = 127.0.0.1
+QDRANT_PORT = 6333
+QDRANT_TIMEOUT = 6000
+
+# Embedding models
+DENSE_MODEL = intfloat/multilingual-e5-base
