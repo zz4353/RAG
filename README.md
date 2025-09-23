@@ -15,15 +15,15 @@ ollama run gemma3:1b
 
 3. Cài đặt
 
-Sử dụng python:
+- Sử dụng python:
 
 ```cmd
 git clone https://github.com/zz4353/RAG.git
 cd RAG
 pip install -r requirements.txt
-'''
+```
 
-Sử dụng miniconda:
+- Sử dụng miniconda:
 
 ```cmd
 git clone https://github.com/zz4353/RAG.git
