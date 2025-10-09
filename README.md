@@ -6,14 +6,20 @@
 docker run -d --name qdrant -p 6333:6333 -p 6334:6334 qdrant/qdrant
 ```
 
-2. Ollama
+2. Neo4j
+
+```cmd
+docker run -d --name neo4j -p7474:7474 -p7687:7687 -e NEO4J_AUTH=neo4j/test1234 neo4j:5
+```
+
+3. Ollama
 
 ```cmd
 ollama serve &
 ollama run gemma3:1b
 ```
 
-3. Cài đặt
+4. Cài đặt
 
 - Sử dụng python:
 

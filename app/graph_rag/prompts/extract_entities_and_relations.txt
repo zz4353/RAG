@@ -1,0 +1,4 @@
+Extract entities and relationships in the following format:
+- Entity: <type>, <value>
+- Relation: <entity1>, <relationship>, <entity2>
+Text: {{text}}
