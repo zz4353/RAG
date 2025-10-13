@@ -47,14 +47,14 @@ const DocumentUpload: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-colors">
       <div className="flex items-center space-x-2 mb-4">
         <Upload className="h-5 w-5 text-blue-500" />
-        <h3 className="text-lg font-semibold text-gray-800">Tải lên tài liệu</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Tải lên tài liệu</h3>
       </div>
 
       {/* Upload Area */}
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors">
         <input
           type="file"
           multiple
@@ -67,10 +67,10 @@ const DocumentUpload: React.FC = () => {
           htmlFor="file-upload"
           className="cursor-pointer flex flex-col items-center space-y-2"
         >
-          <Upload className="h-8 w-8 text-gray-400" />
-          <div className="text-sm text-gray-600">
+          <Upload className="h-8 w-8 text-gray-400 dark:text-gray-500" />
+          <div className="text-sm text-gray-600 dark:text-gray-300">
             <p>Kéo thả tài liệu vào đây hoặc <span className="text-blue-500">chọn tệp</span></p>
-            <p className="text-xs text-gray-400">Hỗ trợ: PDF, TXT, DOCX, MD</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">Hỗ trợ: PDF, TXT, DOCX, MD</p>
           </div>
         </label>
       </div>
@@ -78,17 +78,17 @@ const DocumentUpload: React.FC = () => {
       {/* File List */}
       {files.length > 0 && (
         <div className="mt-4 space-y-2">
-          <h4 className="text-sm font-medium text-gray-700">Tài liệu đã chọn:</h4>
+          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Tài liệu đã chọn:</h4>
           {files.map((file, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+              className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
             >
               <div className="flex items-center space-x-3">
-                <FileText className="h-4 w-4 text-gray-500" />
+                <FileText className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                 <div>
-                  <p className="text-sm font-medium text-gray-800">{file.name}</p>
-                  <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                  <p className="text-sm font-medium text-gray-800 dark:text-white">{file.name}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{formatFileSize(file.size)}</p>
                 </div>
               </div>
               <button
@@ -129,8 +129,8 @@ const DocumentUpload: React.FC = () => {
       {uploadStatus !== 'idle' && (
         <div className={`mt-4 p-3 rounded-lg flex items-center space-x-2 ${
           uploadStatus === 'success' 
-            ? 'bg-green-50 text-green-800' 
-            : 'bg-red-50 text-red-800'
+            ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300' 
+            : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-300'
         }`}>
           {uploadStatus === 'success' ? (
             <CheckCircle className="h-4 w-4" />
