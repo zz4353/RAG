@@ -9,12 +9,11 @@ Return your answer as a valid JSON array. Each item in the array must be an obje
 
 **Do not return any explanation or additional text. Only return the JSON array of entities.**
 
-Example input: Which Samsung phones support fast charging and come with a durable design?
+Example input: What outstanding features do Samsung phones have?
 Example output:
 [
   {"entity": "Samsung phones"},
-  {"entity": "fast charging"},
-  {"entity": "durable design"}
+  {"entity": "outstanding features"},
 ]
 
 Text: {{text}}
