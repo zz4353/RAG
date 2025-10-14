@@ -1,0 +1,20 @@
+Given the following input text, extract all named entities or key entities mentioned in the text.
+- An entity can be a product, person, organization, location, or any important object or concept directly referenced in the text.
+- Do not include general words, stop words, or abstract terms like "thing", "product", "object", "feature", etc.
+- Always preserve the original language and wording of the entity as it appears in the input text. Do not translate or rephrase.
+- If no entity is found, return an empty JSON array (`[]`).
+
+Return your answer as a valid JSON array. Each item in the array must be an object with exactly one field:
+- "entity": the extracted entity as a string
+
+**Do not return any explanation or additional text. Only return the JSON array of entities.**
+
+Example input: Which Samsung phones support fast charging and come with a durable design?
+Example output:
+[
+  {"entity": "Samsung phones"},
+  {"entity": "fast charging"},
+  {"entity": "durable design"}
+]
+
+Text: {{text}}

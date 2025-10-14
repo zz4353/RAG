@@ -22,7 +22,7 @@ class EmbeddingEntityGraph(NetworkxEntityGraph):
                 self.faiss_index.add(emb)
                 self.node_list.append(node)
 
-    def get_similar_nodes(self, query, top_k=2, threshold=0.85):
+    def get_similar_nodes(self, query, top_k=3, threshold=0.85):
         query_emb = self.dense_embedding_model.encode(query)
         query_emb = np.array(query_emb).reshape(1, -1)
         query_emb = query_emb / np.linalg.norm(query_emb, axis=1, keepdims=True)
