@@ -12,6 +12,14 @@ def preprocess_file(path):
         markdown_text = load_file_as_markdown(path)
         chunk_contents = chunking(markdown_text)
         chunked_data = [[chunk, file_name] for chunk in chunk_contents]
+    elif path.endswith(".md"):
+        file_name = path.split("/")[-1]
+
+        with open(path, "r") as f:
+            markdown_text = f.read()
+
+        chunk_contents = chunking(markdown_text)
+        chunked_data = [[chunk, file_name] for chunk in chunk_contents]
     else:
         pass
 
@@ -22,8 +30,9 @@ def load_and_index_data(vector_store, path):
 
     print(f"Indexing data from {path}...")
     files = get_files_in_directory(path)
-    
+
     for path in files:
+        print(path)
         chunked_data = preprocess_file(path)
         vector_store.insert_data(["content", "source"], chunked_data, [0, 1])
 
