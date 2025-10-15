@@ -1,9 +1,9 @@
 # RAG
 
-1. Qdrant
+1. Chạy các database
 
 ```cmd
-docker run -d --name qdrant -p 6333:6333 -p 6334:6334 qdrant/qdrant
+docker compose up -d
 ```
 
 2. Ollama
@@ -33,7 +33,15 @@ conda activate rag
 pip install -r requirements.txt
 ```
 
-4. Run
+4. Lấy data và index data
+
+- Chạy 
+```cmd
+chmod +x data.sh &
+bash data.sh
+```
+
+5. Run
 
 ```cmd
 python main.py

@@ -9,5 +9,7 @@ def ask_llm(prompt):
     return response.content
 
 def ask_rag(prompt, documents):
-    prompt = render_prompt(os.path.join(os.path.realpath(__file__),"..", "prompts", "prompt.txt"), documents, prompt)
+    base_dir = os.path.dirname(os.path.realpath(__file__))
+    prompt_path = os.path.abspath(os.path.join(base_dir, "prompts", "prompt.txt"))
+    prompt = render_prompt(prompt_path, documents, prompt)
     return ask_llm(prompt)

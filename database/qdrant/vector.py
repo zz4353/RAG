@@ -61,7 +61,7 @@ class VectorStore:
     def _embed_contents(self, chunk_contents):
         dense_embeddings = self.dense_embedding_model.encode(chunk_contents)
         return dense_embeddings
-
+        
     def _upsert_data(self, points):
         BATCH_SIZE = 100
         for i in range(0, len(points), BATCH_SIZE):
@@ -75,7 +75,7 @@ class VectorStore:
     def insert_data(self, payload_keys, payload_values, embedding_indices=[0]):
         if not payload_values:
             return
-
+        
         if isinstance(payload_values[0], str):
             contents = payload_values
         elif isinstance(payload_values[0], list):
