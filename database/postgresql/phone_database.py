@@ -1,6 +1,5 @@
 import psycopg
 from psycopg.types.json import Json
-import os
 from pathlib import Path
 import re
 
@@ -94,15 +93,15 @@ class PhoneDB:
             
             document_content = ""
             
-            product_name = f"**Tên sán phẩm:** {row[2]}\n"
-            product_price = f"**Giá sản phẩm:** {row[3]}\n"
+            product_name = f"**Tên sán phẩm:** {row[2]}\n\n"
+            product_price = f"**Giá sản phẩm:** {row[3]}\n\n"
             
             colors = ", ".join(row[4])
-            product_colors = f"**Các màu của sản phẩm:** {colors}\n"
-            product_infos = f"**Thông số sản phẩm: {self._process_product_infos(row[5])}"
+            product_colors = f"**Các màu của sản phẩm:** {colors}\n\n"
+            product_infos = f"**Thông số sản phẩm:** {self._process_product_infos(row[5])}"
             
             pr = row[7].strip()
-            product_pr = f"**Giới thiệu sản phẩm:** {pr}\n"
+            product_pr = f"**Giới thiệu sản phẩm:** {pr}\n\n"
             
             document_content += product_name
             document_content += product_price
@@ -116,7 +115,7 @@ class PhoneDB:
         result = ""
         
         for key, value in product_infos.items():
-            result += f"{key}: {value}\n"
+            result += f"{key}: {value}\n\n"
         return result
     
     def _write_data_file(self, content, file_path):
