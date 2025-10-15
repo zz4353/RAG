@@ -4,6 +4,8 @@ import os
 
 from crawler.cellphoneS import CellphoneSCrawler
 from database.postgresql import PhoneDB
+from app.vector_rag.indexer import load_and_index_data
+from app.vector_rag.collections import COLLECTIONS
 
 load_dotenv()
 
@@ -27,3 +29,5 @@ if __name__ == "__main__":
 
     asyncio.run(crawler.run())
     crawled_data_db.get_data_ready()
+    
+    load_and_index_data()
