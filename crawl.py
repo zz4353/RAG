@@ -30,4 +30,4 @@ if __name__ == "__main__":
     asyncio.run(crawler.run())
     crawled_data_db.get_data_ready()
     
-    load_and_index_data()
+    load_and_index_data(COLLECTIONS["phones"], "data")
