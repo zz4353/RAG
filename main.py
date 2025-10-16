@@ -1,24 +1,29 @@
-from app.llm.chat import ask_llm, ask_rag
-from app.vector_rag.indexer import load_and_index_data
-from app.vector_rag.collections import COLLECTIONS
+from fastapi import FastAPI, Query, Request, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+from app.src.api.chat import *
 
-question = "Xin chào, bạn là mô hình gì?"
-answer = ask_llm(question)
-print(answer)
-print("--------------------------------------------------------")
+app = FastAPI(title="rag enpoit", version="0.1.0")
 
-question = "Con vịt có mấy chân?"
-docs = ["Con vịt có 4 chân."]
-answer = ask_rag(question, docs)
-print(answer)
-print("--------------------------------------------------------")
+# Allow frontend dev server
+origins = [
+    "http://localhost:5173",
+]
 
-load_and_index_data(COLLECTIONS["books"], "data/books")  # index data xong thì comment lại.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-question = "phụ nữ muốn gì ở đàn ông?"
-docs = COLLECTIONS["books"].search(question, top_k=3, threshold=0.3)
-print(docs)
-print("--------------------------------------------------------")
+app.include_router(router)
 
-answer = ask_rag(question, docs)
-print(answer)
+def main():
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    print("http://localhost:8000/docs")
+    print("http://localhost:6333/dashboard#/collections")
+
+if __name__ == "__main__":
+    main()
