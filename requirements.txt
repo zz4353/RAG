@@ -10,3 +10,4 @@ qdrant-client
 semchunk
 sentence-transformers
 tiktoken
+langchain_community

@@ -211,3 +211,4 @@ database/postgres/pgdata/
 database/qdrant/qdrant_data/
 
 data
+cache/

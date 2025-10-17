@@ -15,7 +15,7 @@ def preprocess_file(path):
     elif path.endswith(".md"):
         file_name = path.split("/")[-1]
 
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             markdown_text = f.read()
 
         chunk_contents = chunking(markdown_text)

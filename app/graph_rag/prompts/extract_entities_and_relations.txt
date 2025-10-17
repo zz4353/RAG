@@ -1,0 +1,29 @@
+Given the following input text, extract all factual relationships in the form of triples (subject, relation, object).
+- The "subject" must always be the main entity mentioned in the text (for example, a specific product, person, or company), not a general or abstract term like "features", "characteristics", or "aspects".
+- If the text lists properties, features, or components of an entity, use the main entity as the subject in each corresponding triple.
+- Do not create or use generic subjects such as "the features", "characteristics", "aspects", or similar. Always refer directly to the main entity.
+- The "relation" should be a verb, preposition, or phrase that best expresses the relationship between subject and object.
+- The "object" should be the specific property, feature, or value related to the main entity.
+- **In each triple, always preserve the original language, wording, and phrasing as it appears in the input text. Do not translate or rephrase.**
+
+Return your answer as a valid JSON array. Each item in the array must be an object with exactly three fields:
+- "subject": the main entity (string, noun, or named entity)
+- "relation": the relationship or action (string, verb, or phrase)
+- "object": the property, value, or entity (string)
+
+**Do not return any explanation or additional text. Only return the JSON array of triples.**
+If no valid triple is found, return an empty JSON array (`[]`).
+
+Example input: Samsung phones have the following good features: beautiful screen, long battery life, and excellent camera. In addition, the phones support fast charging and come with a durable design. The new headphones released by Samsung offer impressive sound quality and comfortable ear cushions.
+Example output:
+[
+  {"subject": "Samsung phones", "relation": "have the following good features", "object": "beautiful screen"},
+  {"subject": "Samsung phones", "relation": "have the following good features", "object": "long battery life"},
+  {"subject": "Samsung phones", "relation": "have the following good features", "object": "excellent camera"},
+  {"subject": "Samsung phones", "relation": "support", "object": "fast charging"},
+  {"subject": "Samsung phones", "relation": "come with", "object": "a durable design"},
+  {"subject": "the new headphones released by Samsung", "relation": "offer", "object": "impressive sound quality"},
+  {"subject": "the new headphones released by Samsung", "relation": "offer", "object": "comfortable ear cushions"}
+]
+
+Text: {{text}}

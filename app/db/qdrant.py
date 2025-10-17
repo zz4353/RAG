@@ -127,4 +127,4 @@ class VectorStore:
     
     def search(self, query, top_k=5, threshold=0.3):
         results = self.search_dense(query, top_k, threshold)
-        return results
+        return [item.payload for item in results]

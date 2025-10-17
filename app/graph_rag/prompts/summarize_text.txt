@@ -1,0 +1,15 @@
+Given the following input text, generate a concise summary that preserves all key factual information, main entities, and their important relationships.  
+- The summary should be short and focus on facts only.  
+- Omit irrelevant details, opinions, or background information.
+- Keep the language neutral and objective.
+- If the text contains lists, processes, or sequences, summarize them clearly.
+- **Always preserve the original language and wording of the input text in the summary. Do not translate,  or switch to a different language.**
+- **Detect the language of the input and enforce output in the same language, even if the input is partially multilingual.
+
+Return only the summary paragraph.  
+Do not include any explanation, header, or formatting.
+
+Example input: The newly launched Samsung phone this year features a modern design, youthful colors, and comes equipped with many outstanding features such as a sharp camera, long-lasting battery, and fast charging support. According to some online users, the device feels comfortable to hold and the interface is quite easy to use, but its current price is still a bit high compared to other products in the same segment. In addition, the company also introduced a new pair of wireless headphones with noise cancellation and stable Bluetooth connectivity. Personally, I think the new blue color is beautiful, but everyone has their own preferences.
+Example output: The new Samsung phone has a modern design, youthful colors, a sharp camera, long battery life, and supports fast charging. Additionally, Samsung introduced new wireless headphones featuring noise cancellation and stable Bluetooth connectivity.
+
+Text: {{text}}

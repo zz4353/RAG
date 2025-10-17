@@ -1,13 +1,19 @@
-Dựa trên thông tin từ các tài liệu dưới đây, hãy trả lời câu hỏi bằng tiếng Việt, ngắn gọn, chính xác và chỉ dựa vào nội dung có trong tài liệu. 
-Nếu không tìm thấy thông tin, trả lời "Không tìm thấy thông tin".
+Based on the information from the documents below, answer the question as accurately and concisely as possible.
+Only use information found within the provided documents.
+If you cannot find the answer, reply with "No information found" in the language of the question.
 
-Tài liệu:
+Documents:
 {% for doc in docs -%}
----
 {{ doc }}
 {% endfor -%}
 ----
 
-Câu hỏi: {{ question }}
+User Question: {{ question }}
 
-Trả lời:
+Instructions:
+1. First, detect the language of the question.
+2. Answer in the same language as the question.
+3. Only use information present in the documents above.
+4. If there is no relevant information, reply with "No information found" in the language of the question.
+
+Answer:
