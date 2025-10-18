@@ -29,7 +29,7 @@ Output:
 ]
 
 Example 3
-Input: Điện thoại pin trâu, chụp ảnh đẹp trong tầm giá 5 triệu
+Input: Tôi cần tìm điện thoại pin trâu, chụp ảnh đẹp trong tầm giá 5 triệu
 Output:
 [
   {"entity": "Điện thoại pin trâu"},

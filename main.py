@@ -3,7 +3,7 @@ from app.vector_rag.collections import COLLECTIONS
 from app.vector_rag.indexer import load_and_index_data
 from app.graph_rag.collections import graph
 from app.graph_rag.indexer import load_and_index_data_to_graph
-from app.graph_rag.retriever import search_graph
+from app.graph_rag.retriever import search_graph, extract_entities
 
 
 # Chỉ chạy 1 lần để index dữ liệu vào collection vector store
@@ -20,5 +20,6 @@ def run_pipeline(user_question):
 
 
 if __name__ == "__main__":
-    graph.load("cache/entity_graph.pkl")
-    print(run_pipeline("Điện thoại pin trâu, chụp ảnh đẹp trong tầm giá 5 triệu"))
+    # graph.load("cache/entity_graph.pkl")
+    # print(search_graph(graph, "Hiện tại cửa hàng có những mẫu điện thoại nào phù hợp để chơi game?"))
+    print(COLLECTIONS["phones"].search("Điện thoại pin trâu, chụp ảnh đẹp trong tầm giá 5 triệu"))
