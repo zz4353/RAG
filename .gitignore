@@ -207,7 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 models/
-database/postgres/pgdata/
+database/postgresql/pgdata/
 database/qdrant/qdrant_data/
 
 data
