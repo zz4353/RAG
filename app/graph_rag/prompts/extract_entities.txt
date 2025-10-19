@@ -1,0 +1,40 @@
+Given the following input text, extract all named entities or key entities mentioned in the text.
+- An entity can be a product, person, organization, location, or any important object or concept directly referenced in the text.
+- Do not include general words, stop words, or abstract terms like "thing", "product", "object", "feature", etc.
+- Always preserve the original language and wording of the entity as it appears in the input text. Do not translate.
+- If there are more than 10, select the most relevant entities related to mobile phones (such as: phone brands, phone models or product lines, important features like battery, camera, display, processor, RAM, storage, charging, price ranges or budget, unique selling points or technologies such as 5G, fast charging, water resistance...).
+- If no entity is found, return an empty JSON array (`[]`).
+
+Return your answer as a valid JSON array. Each item in the array must be an object with exactly one field:
+- "entity": the extracted entity as a string
+
+**Do not return any explanation or additional text. Only return the JSON array of entities.**
+
+Example 1  
+Input: What outstanding features do Samsung phones have?  
+Output:
+[
+  {"entity": "Samsung phones"},
+  {"entity": "outstanding features"}
+]
+
+Example 2  
+Input: Apple introduced the iPhone 15 at their September event in California.  
+Output:
+[
+  {"entity": "Apple"},
+  {"entity": "iPhone 15"},
+  {"entity": "September event"},
+  {"entity": "California"}
+]
+
+Example 3
+Input: Tôi cần tìm điện thoại pin trâu, chụp ảnh đẹp trong tầm giá 5 triệu
+Output:
+[
+  {"entity": "Điện thoại pin trâu"},
+  {"entity": "chụp ảnh đẹp"},
+  {"entity": "5 triệu"}
+]
+
+Text: {{text}}

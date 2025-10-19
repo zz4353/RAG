@@ -14,6 +14,11 @@ def ask_llm(prompt):
 
 def ask_rag(prompt, documents):
     base_dir = os.path.dirname(os.path.realpath(__file__))
-    template_path = os.path.join(base_dir, "prompts", "prompt.txt")
-    prompt = render_prompt(template_path, documents, prompt)
+# <<<<<<< HEAD
+#     template_path = os.path.join(base_dir, "prompts", "prompt.txt")
+#     prompt = render_prompt(template_path, documents, prompt)
+# =======
+    prompt_path = os.path.abspath(os.path.join(base_dir, "prompts", "prompt.txt"))
+    prompt = render_prompt(prompt_path, documents, prompt)
+# >>>>>>> origin/dev
     return ask_llm(prompt)

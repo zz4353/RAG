@@ -23,3 +23,5 @@ class DenseEmbedding:
         
     def get_dimension(self):
         return self.encode("test").shape[0]
+    
+dense_model = DenseEmbedding()
