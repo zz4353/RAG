@@ -46,7 +46,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onMessageSent }) => {
     setIsLoading(true);
 
     try {
-      const response = await chatAPI.sendMessage(input, queryType);
+      // const response = await chatAPI.sendMessage(input, queryType);
+      const response = await chatAPI.sendHybridMessage(input);
       
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),

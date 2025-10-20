@@ -33,6 +33,28 @@ export const chatAPI = {
     };
   },
 
+  sendHybridMessage: async (message: string) => {
+    const res = await fetch(`${BASE_URL}/ask_hybrid`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: message,
+        docs_vectordb: [],
+        sentences: [],
+      })
+    });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const sources = Array.isArray(data?.docs)
+      ? data.docs.map(mapPointToDocument)
+      : [];
+    return {
+      answer: data?.answer ?? '',
+      sources,
+      query_type: 'hybrid' as const,
+    };
+  },
+
   // // Upload documents (multipart) -> map to existing UploadResponse shape
   // uploadDocuments: async (files: File[]) => {
   //   const form = new FormData();

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List, Dict, Any
 
 class AskRequest(BaseModel):
     question: str
@@ -7,6 +7,16 @@ class AskRequest(BaseModel):
 class RagRequest(BaseModel):
     question: str
     docs: List[str]
+    
+class HybridRequest(BaseModel):
+    question: str
+    docs_vectordb: List[str]
+    sentences: List[str]
+    
+class CollectionInfo(BaseModel):
+    name: str
+    count: int
+    status: str
 
 
 class IndexRequest(BaseModel):

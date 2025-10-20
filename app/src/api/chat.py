@@ -10,6 +10,9 @@ from app.vector_rag.collections import COLLECTIONS
 from app.vector_rag.indexer import load_and_index_data
 from app.src.models.models import *
 
+from app.graph_rag.retriever import search_graph
+from app.graph_rag.collections import graph
+
 router = APIRouter()
 
 # Endpoints
@@ -19,10 +22,44 @@ def ask_llm_enpoint(req: AskRequest)-> Dict:
     return {"question": req.question, "answer": answer}
 
 @router.post("/ask-rag")
-def ask_rag_enpoint(req: RagRequest)-> Dict:
-    req.docs = COLLECTIONS["books"].search(req.question, top_k=3, threshold=0.3) 
-    answer = ask_rag(req.question, req.docs)
-    return {"question": req.question, "docs": req.docs, "answer": answer}
+def ask_rag_endpoint(req: RagRequest) -> Dict:
+    raw_docs = COLLECTIONS["phones"].search(req.question, top_k=3, threshold=0.3)
+    print(raw_docs)
+    answer = ask_rag(req.question, [d["content"] for d in raw_docs])
+
+    return {
+        "question": req.question,
+        "docs": [
+            {
+                # "id": str(i),
+                "payload": {"source": d["source"], "content": d["content"]},
+                # "score": d.get("score", 0)
+            }
+            for i, d in enumerate(raw_docs)
+        ],
+        "answer": answer
+    }
+
+@router.post("/ask_hybrid")
+def ask_hybrid_enpoint(req: HybridRequest) -> Dict:
+    req.docs_vectordb = COLLECTIONS["phones"].search(req.question, top_k=3, threshold=0.3)
+
+    raw_graph = search_graph(graph, req.question)
+    # print(f"raw_graph: {raw_graph}")
+    graph_docs = [{"source": "graph", "content": s} for s in raw_graph]
+    req.sentences = graph_docs
+    documents = req.docs_vectordb + req.sentences
+    # print(req.docs_vectordb)
+    # print("-----------------------------------------")
+    # print(documents) # array of objects Là một object (đối tượng JSON-like) với exactly 2 keys: "content" và "source"
+    answer = ask_rag(req.question, documents)
+    return {
+        "question": req.question,
+        "docs": [
+            {"payload": {"source": d["source"], "content": d["content"]},}for d in documents
+        ],
+        "answer": answer
+    }
 
 @router.api_route("/index", methods=["GET", "POST"])
 def index_data(req: IndexRequest, request: Request = None)-> Dict:
@@ -42,6 +79,21 @@ def search_docs(req: SearchRequest)-> Dict:
         req.query, top_k=req.top_k, threshold=req.threshold
     )
     return {"query": req.query, "result": docs}
+
+
+@router.get("/collections", response_model=Dict[str, List[CollectionInfo]])
+def get_collections():
+    collections_info = []
+    for name, collection in COLLECTIONS.items():
+        info = collection.get_collection_info()
+        collections_info.append(
+            CollectionInfo(
+                name=name,
+                count=info.points_count,
+                status="activate"
+            )
+        )
+    return {"collections": collections_info}
 
 
 @router.get("/", response_model=HealthRespond)
@@ -75,42 +127,3 @@ def root() -> HealthRespond:
     return overal
 
 
-@router.get("/collections")
-def get_collections() -> Dict:
-    collections_info = []
-    # print(COLLECTIONS.items())
-    for name, collection in COLLECTIONS.items():
-        info = collection.get_collection_info()
-        collections_info.append({
-            "name": name,
-            "count": info.points_count,
-            "status": "activate"
-        })
-    return {"collections": collections_info}
-
-
-# @router.post("/upload")
-# async def upload_files(files: List[UploadFile] = File(...)) -> Dict:
-#     """Upload files and index into the default 'books' collection."""
-#     try:
-#         upload_dir = os.path.join("data", "books")
-#         os.makedirs(upload_dir, exist_ok=True)
-
-#         saved_files: List[str] = []
-#         for f in files:
-#             dest_path = os.path.join(upload_dir, f.filename)
-#             content = await f.read()
-#             with open(dest_path, "wb") as out:
-#                 out.write(content)
-#             saved_files.append(dest_path)
-
-#         # Index the directory after saving
-#         load_and_index_data(COLLECTIONS["books"], upload_dir)
-
-#         return {
-#             "status": "success",
-#             "files_processed": len(saved_files),
-#             "saved": saved_files,
-#         }
-#     except Exception as e:
-#         return {"status": "error", "error": str(e)}
