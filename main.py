@@ -13,4 +13,4 @@ def run_pipeline(user_question):
 
 if __name__ == "__main__":
     graph.load("cache/entity_graph.pkl")
-    print(run_pipeline("Hiện tại cửa hàng có những mẫu điện thoại nào phù hợp để học tập?"))
+    print(run_pipeline("Hiện tại cửa hàng có những mẫu điện thoại samsung nào tốt?"))
