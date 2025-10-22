@@ -77,4 +77,7 @@ def main():
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
     print("http://localhost:8000/docs")
-    print("http://localhost:6333/dashboard#/collections")
+    print("http://localhost:6333/dashboard")
+
+if __name__ == "__main__":
+    main()
