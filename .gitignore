@@ -212,3 +212,6 @@ database/qdrant/qdrant_data/
 
 data
 cache/
+
+saving/
+frontend/node_modules/
