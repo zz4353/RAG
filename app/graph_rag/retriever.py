@@ -30,7 +30,9 @@ def search_graph(graph, user_question):
         if node not in seen:
             unique_nodes.append(node)
             seen.add(node)
-
+    
+    print(f"unique_nodes: {unique_nodes}")
+    
     sentences = []
     for node in unique_nodes:
         triples = graph.search_triples_with_depth(node, depth=1)

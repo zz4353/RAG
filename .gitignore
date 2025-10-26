@@ -205,10 +205,13 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+# <<<<<<< HEAD
+app/embedding/models
+# =======
 
-models/
-database/postgresql/pgdata/
-database/qdrant/qdrant_data/
+# models/
+# database/postgresql/pgdata/
+# database/qdrant/qdrant_data/
 
 data
 cache/

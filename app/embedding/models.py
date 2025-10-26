@@ -9,7 +9,12 @@ load_dotenv()
 
 class DenseEmbedding:
     def __init__(self, model_name=os.getenv("DENSE_MODEL")):
-        self.model = SentenceTransformer(model_name, cache_folder=os.path.join(os.path.dirname(os.path.realpath(__file__)),"models"))
+        device = os.getenv("DENSE_DEVICE", "cpu") 
+        self.model = SentenceTransformer(
+            model_name, 
+            cache_folder=os.path.join(os.path.dirname(os.path.realpath(__file__)),"models"),
+            device = device
+        )
 
     def encode(self, texts):
         if isinstance(texts, str):
