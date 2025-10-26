@@ -11,10 +11,10 @@ load_dotenv()
 dir_path = Path(os.path.dirname(__file__))
 out_json= os.path.join(dir_path, "test_set.json")
 data_path = os.path.join(dir_path.parent.parent, "data/data")
-MODEL_NAME = os.getenv("GEN_MODEL", "gpt-4o-mini")
-TEMPERATURE = os.getenv("GEN_TEMPERATURE","0")
-MAX_TOKENS = os.getenv("GEN_MAX_TOKENS","800")
-QAS_PER_FILE = os.getenv("GEN_QAS_PER_FILE","5")
+MODEL_NAME = "gpt-4o-mini"
+TEMPERATURE = 0
+MAX_TOKENS = 800
+QAS_PER_FILE = 1
 OPENAI_KEY = os.getenv("OPENAI_API_KEY","")
 
 
@@ -97,8 +97,8 @@ def main():
             "qas": qas,
         })
         print("done")
-        if i == 3:
-            break
+        # if i == 3:
+        #     break
     # write_jsonl(jsonl_rows, out_json)
     write_json(jsonl_rows, out_json)
 

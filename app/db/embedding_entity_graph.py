@@ -5,11 +5,11 @@ from langchain_community.graphs.networkx_graph import NetworkxEntityGraph, Knowl
 from app.db.qdrant import VectorStore
 
 class EmbeddingEntityGraph(NetworkxEntityGraph):
-    def __init__(self, dense_model, collection_name):
+    def __init__(self, dense_model, sparse_model, cross_encoder, collection_name):
         super().__init__()
         self.node_set = set()
         self.collection_name = collection_name  
-        self.vector_store = VectorStore(self.collection_name, dense_model)
+        self.vector_store = VectorStore(self.collection_name, dense_model, sparse_model, cross_encoder)
 
     def add_triple(self, subject, predicate, object_):
         super().add_triple(KnowledgeTriple(subject, predicate, object_))
@@ -69,7 +69,7 @@ class EmbeddingEntityGraph(NetworkxEntityGraph):
             self._graph = data['graph']
             self.node_set = data['node_set']
             self.collection_name = data['collection_name']
-            self.vector_store = VectorStore(self.collection_name, self.vector_store.dense_embedding_model)
+            self.vector_store = VectorStore(self.collection_name, self.vector_store.dense_embedding_model, self.vector_store.sparse_embedding_model, self.vector_store.cross_encoder)
         print(f"Graph loaded from {path}")
     
     def recreate(self):

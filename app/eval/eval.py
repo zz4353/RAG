@@ -103,9 +103,6 @@ def data_constructor(testset_path, option):
 
     evaluation_dataset = EvaluationDataset.from_list(dataset)
     return evaluation_dataset
-    
-def evaluator(question, ):
-    pass
 
 
 if __name__ == "__main__":
@@ -132,17 +129,34 @@ if __name__ == "__main__":
         temperature=0,
         max_tokens=1024,
     )
-    # Wrap for RAGAS compatibility
-    evaluator_llm = LangchainLLMWrapper(eval_llm)
+
+# Wrap for RAGAS compatibility
+evaluator_llm = LangchainLLMWrapper(eval_llm)
+for option in ["hybrid", "rag_only"]:
     results = evaluate_safe(
-        # dataset=data_constructor(testset_path, "hybrid"),
-        dataset=data_constructor(testset_path, "rag_only"),
+        dataset=data_constructor(testset_path, option),
         metrics=metrics,
         llm=evaluator_llm,
     )
 
     print("\n RAGAS RESULTS")
     print(results)
+
+    # --- Save results to log file ---
+    log_file = f"ragas_results_{option}.txt"
+    with open(log_file, "a", encoding="utf-8") as f:
+        f.write("\n==============================\n")
+        f.write(f"RAGAS RESULTS for option: {str(option)}\n")
+        f.write(str(results))
+        f.write("\n")
+
+        # Nếu có thể chuyển sang pandas, lưu thêm bảng chi tiết
+        try:
+            df = results.to_pandas()
+            f.write("\nPandas Results:\n")
+            f.write(df.to_string())
+        except Exception:
+            f.write("\n(Pandas conversion failed)\n")
 
     try:
         print(results.to_pandas())

@@ -216,5 +216,5 @@ app/embedding/models
 data
 cache/
 # >>>>>>> origin/dev
-app/eval/test_set.json
+saving
 

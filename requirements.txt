@@ -11,3 +11,7 @@ semchunk
 sentence-transformers
 tiktoken
 langchain_community
+FlagEmbedding
+fastembed
+underthesea
+numpy

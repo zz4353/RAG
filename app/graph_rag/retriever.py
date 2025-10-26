@@ -18,8 +18,6 @@ def search_graph(graph, user_question):
     if not entities:
         return []
     
-    print(entities)
-    
     matched_nodes  = []
     for entity in entities:
         similar_nodes = graph.get_similar_nodes(entity)

@@ -46,3 +46,19 @@ bash data.sh
 ```cmd
 python main.py
 ```
+
+6. Hướng dẫn chạy dự án.
+```text
+- vào thư mục root của dự án sau đó chạy: docker compose up
+- chạy main.py để chạy backend và check vectordb và graphdb nếu không có sẽ tự động được load và khởi tạo: python -m main
+- chay frontend: npm run dev
+- truy cap vao: http://localhost:5173/
+```
+
+7. Huong dan danh gia.
+```text
+- vao root
+- Trong gen_testset.py Dieu chinh QAS_PER_FILE de gioi han so cau hoi danh gia duoc sinh ra tren tai lieu
+- chay gen_testset.py de sinh test_set.json: python -m app.eval.gen_testset
+- chay eval.py de danh gia hybird va rag only: python -m app.eval.eval
+```
