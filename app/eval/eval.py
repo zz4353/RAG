@@ -21,7 +21,7 @@ load_dotenv()
 
 os.getenv("OPENAI_API_KEY")
 MODEL_NAME = os.getenv("CHAT_MODEL", "gemma3:1b")
-TOP_K = 3
+TOP_K = 2
 THRESHOLD = 0.1
 
 def answer_and_contexts_rag_only(question: str):
@@ -70,7 +70,7 @@ testset_path = dir_path / "test_set.json"
 def evaluate_safe(dataset, metrics, llm):
     """Safely run RAGAS evaluation for multiple RAGAS versions."""
     try:
-        return evaluate(dataset=dataset, metrics=metrics, llm=llm, batch_size=1)
+        return evaluate(dataset=dataset, metrics=metrics, llm=llm, batch_size=4) # Increase batch size.
     except TypeError:
         return evaluate(dataset=dataset, metrics=metrics, llm=llm)
    
@@ -125,14 +125,17 @@ if __name__ == "__main__":
     from langchain_openai import ChatOpenAI
     from ragas.llms import LangchainLLMWrapper
     eval_llm = ChatOpenAI(
-        model="gpt-4o-mini",
+        model="gpt-4o-mini", # gpt-4o
         temperature=0,
-        max_tokens=1024,
+        max_tokens=16384,
     )
 
 # Wrap for RAGAS compatibility
-evaluator_llm = LangchainLLMWrapper(eval_llm)
+# evaluator_llm = LangchainLLMWrapper(eval_llm)
+from ragas.llms.base import llm_factory
+evaluator_llm = llm_factory("gpt-4o-mini")
 for option in ["hybrid", "rag_only"]:
+    if option == "rag_only": break # only give running evaluation for Hybrid.
     results = evaluate_safe(
         dataset=data_constructor(testset_path, option),
         metrics=metrics,
@@ -144,6 +147,7 @@ for option in ["hybrid", "rag_only"]:
 
     # --- Save results to log file ---
     log_file = f"ragas_results_{option}.txt"
+    csv_file = f"ragas_results_{option}.csv"
     with open(log_file, "a", encoding="utf-8") as f:
         f.write("\n==============================\n")
         f.write(f"RAGAS RESULTS for option: {str(option)}\n")
@@ -155,10 +159,13 @@ for option in ["hybrid", "rag_only"]:
             df = results.to_pandas()
             f.write("\nPandas Results:\n")
             f.write(df.to_string())
+            df.to_csv(csv_file, index=False, encoding="utf-8")
+            print(f"Saved CSV results to: {csv_file}")
         except Exception:
             f.write("\n(Pandas conversion failed)\n")
 
     try:
-        print(results.to_pandas())
+        df_out = results.to_pandas()
+        print(df_out)
     except Exception:
         pass

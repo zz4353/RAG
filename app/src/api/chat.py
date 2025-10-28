@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, Request, UploadFile, File, APIRouter
+from fastapi import FastAPI, Query, Request, UploadFile, File, APIRouter, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, List
@@ -31,9 +31,7 @@ def ask_rag_endpoint(req: RagRequest) -> Dict:
         "question": req.question,
         "docs": [
             {
-                # "id": str(i),
                 "payload": {"source": d["source"], "content": d["content"]},
-                # "score": d.get("score", 0)
             }
             for i, d in enumerate(raw_docs)
         ],
@@ -56,7 +54,7 @@ def ask_hybrid_enpoint(req: HybridRequest) -> Dict:
     return {
         "question": req.question,
         "docs": [
-            {"payload": {"source": d["source"], "content": d["content"]},}for d in documents
+            {"payload": {"source": d["source"], "content": d["content"]},}for d in req.docs_vectordb # only give docs of vectordb
         ],
         "answer": answer
     }
@@ -84,6 +82,7 @@ def search_docs(req: SearchRequest)-> Dict:
 @router.get("/collections", response_model=Dict[str, List[CollectionInfo]])
 def get_collections():
     collections_info = []
+    # get the vectordb collections.
     for name, collection in COLLECTIONS.items():
         info = collection.get_collection_info()
         collections_info.append(
@@ -93,6 +92,18 @@ def get_collections():
                 status="activate"
             )
         )
+        # get the graph_rag collection.
+        from app.graph_rag.collections import graph
+        graph_name = graph.collection_name
+        graph_collection = graph.vector_store.get_collection_info()
+        collections_info.append(
+            CollectionInfo(
+                name = graph_name,
+                count= graph_collection.points_count,
+                status="activate"
+            )
+        )
+        print(collections_info)
     return {"collections": collections_info}
 
 

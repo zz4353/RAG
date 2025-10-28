@@ -14,25 +14,27 @@ data_path = os.path.join(dir_path.parent.parent, "data/data")
 MODEL_NAME = "gpt-4o-mini"
 TEMPERATURE = 0
 MAX_TOKENS = 800
-QAS_PER_FILE = 1
+QAS_PER_FILE = 3
 OPENAI_KEY = os.getenv("OPENAI_API_KEY","")
 
 
-
+# edit prompt
 def prompt_init(doc_text: str, n_qas: int) -> str:
     print(f"Start to construct promt ...")
     return f"""
-You are a data annotator. Given the document below, create {n_qas} high-quality Vietnamese QA pairs for evaluating a RAG system.
+Imagine you are a phone consultant and also a customer. With the document below, create {n_qas} high-quality Vietnamese QA pairs to evaluate the RAG system.
 
 Rules:
-- Questions must be answerable ONLY from the given document.
-- Answers must be concise, grounded, and in Vietnamese.
-- Prefer diverse question styles (what/why/how/definition/fact).
-- Avoid overlapping meaning and avoid trivial questions.
-- Output strictly as JSON with the schema: {{"qas":[{{"question": "...","answer":"..."}}, ...]}}
+- ONLY answer the questions in the given document.
+
+- Answers must be clear, concise, well-founded and in Vietnamese.
+
+- Prioritize diverse types of questions (who is the machine suitable for?, what are the machine's specifications?; how much does it cost?; color; size;...).
+
+- Export as JSON with the schema: {{"qas":[{{"question": "...","answer":"..."}}, ...]}}
 
 Document:
-\"\"\"{doc_text[:8000]}\"\"\"
+\"\"{doc_text[:8000]}\"\"\"
 """
 
 def call_llm(llm: ChatOpenAI, prompt: str) -> Dict:
@@ -53,11 +55,6 @@ def load_text(path: Path) -> str:
     print(f"Start to load text from {path} ...")
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
-
-# def write_jsonl(items: List[Dict], out_json) -> None:
-#     with open(out_json, "w", encoding="utf-8") as f:
-#         for item in items:
-#             f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
 def write_json(items: List[Dict], out_path: str) -> None:
     """Ghi toàn bộ dữ liệu thành 1 file JSON hợp lệ."""
@@ -97,8 +94,8 @@ def main():
             "qas": qas,
         })
         print("done")
-        # if i == 3:
-        #     break
+        if i == 3:
+            break
     # write_jsonl(jsonl_rows, out_json)
     write_json(jsonl_rows, out_json)
 

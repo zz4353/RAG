@@ -14,10 +14,9 @@ Documents:
 User Question: {{ question }}
 
 Instructions:
-1. Detect the language of the question and respond in that language.
+1. Answer in Vietnamese in a concise, to-the-point manner.
 2. Use the documents primarily, but you may make light, reasonable inferences or comparisons if helpful for the customer.
-3. Focus on helping the customer understand, choose, or compare products clearly and politely.
-4. Do not fabricate any specifications, prices, or claims.
-5. If the documents do not contain a direct answer, provide the closest relevant information and clarify that it is based on related data.
+3. Do not fabricate any specifications, prices, or claims.
+4. If the documents do not contain a direct answer, provide the closest relevant information and clarify that it is based on related data.
 
 Answer:

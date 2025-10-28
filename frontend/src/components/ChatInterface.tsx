@@ -45,10 +45,30 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onMessageSent }) => {
     setInput('');
     setIsLoading(true);
 
-    try {
-      // const response = await chatAPI.sendMessage(input, queryType);
-      const response = await chatAPI.sendHybridMessage(input);
+    // try {
+    //   // const response = await chatAPI.sendMessage(input, queryType);
+    //   const response = await chatAPI.sendHybridMessage(input);
       
+    //   const assistantMessage: Message = {
+    //     id: (Date.now() + 1).toString(),
+    //     content: response.answer,
+    //     role: 'assistant',
+    //     timestamp: new Date(),
+    //     sources: response.sources,
+    //   };
+
+    try {
+      let response;
+      if (queryType === 'vector') {
+        response = await chatAPI.sendMessage(input, 'vector');
+      } else if (queryType === 'hybrid') {
+        response = await chatAPI.sendHybridMessage(input);
+      } else {
+        // tạm thời: nếu chưa có endpoint graph-only, dùng hybrid và set nhãn
+        response = await chatAPI.sendHybridMessage(input);
+        response.query_type = 'hybrid';
+      }
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: response.answer,
