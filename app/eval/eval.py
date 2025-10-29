@@ -120,10 +120,9 @@ if __name__ == "__main__":
         torch.cuda.empty_cache()
     except Exception:
         pass
-    
+    from ragas.llms import LangchainLLMWrapper
     
     from langchain_openai import ChatOpenAI
-    from ragas.llms import LangchainLLMWrapper
     eval_llm = ChatOpenAI(
         model="gpt-4o-mini", # gpt-4o
         temperature=0,
