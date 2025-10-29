@@ -218,3 +218,7 @@ cache/
 
 saving/
 frontend/node_modules/
+
+database/postgresql/pgdata/
+database/qdrant/qdrant_data/
+
