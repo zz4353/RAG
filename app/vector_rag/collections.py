@@ -1,8 +1,6 @@
 from app.db.qdrant import VectorStore
-from app.embedding.models import DenseEmbedding
-
-dense_model = DenseEmbedding()
+from app.embedding.models import dense_model, sparse_model, cross_encoder
 
 COLLECTIONS = {
-    "books": VectorStore(collection_name="books_collection", dense_model=dense_model),
+    "phones": VectorStore(collection_name="phones_collection", dense_model=dense_model, sparse_model=sparse_model, cross_encoder=cross_encoder),
 }

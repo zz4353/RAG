@@ -45,9 +45,30 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onMessageSent }) => {
     setInput('');
     setIsLoading(true);
 
-    try {
-      const response = await chatAPI.sendMessage(input, queryType);
+    // try {
+    //   // const response = await chatAPI.sendMessage(input, queryType);
+    //   const response = await chatAPI.sendHybridMessage(input);
       
+    //   const assistantMessage: Message = {
+    //     id: (Date.now() + 1).toString(),
+    //     content: response.answer,
+    //     role: 'assistant',
+    //     timestamp: new Date(),
+    //     sources: response.sources,
+    //   };
+
+    try {
+      let response;
+      if (queryType === 'vector') {
+        response = await chatAPI.sendMessage(input, 'vector');
+      } else if (queryType === 'hybrid') {
+        response = await chatAPI.sendHybridMessage(input);
+      } else {
+        // tạm thời: nếu chưa có endpoint graph-only, dùng hybrid và set nhãn
+        response = await chatAPI.sendHybridMessage(input);
+        response.query_type = 'hybrid';
+      }
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: response.answer,
@@ -95,7 +116,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onMessageSent }) => {
               className="px-3 py-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="vector">Vector Search</option>
-              <option value="graph">Graph Search</option>
+              {/* <option value="graph">Graph Search</option> */}
               <option value="hybrid">Hybrid RAG</option>
             </select>
           </div>

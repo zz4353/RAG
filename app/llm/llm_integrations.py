@@ -1,9 +1,17 @@
 import os
 from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
 
 load_dotenv()
 LLM_TYPE = os.getenv("LLM_TYPE", "ollama")
+
+def init_openai_chat(temperature):
+    return ChatOpenAI(
+        model=os.getenv("CHAT_MODEL"),
+        streaming=True,
+        temperature=temperature,
+    )
 
 def init_ollama_chat(temperature):
     return OllamaLLM(
@@ -13,6 +21,7 @@ def init_ollama_chat(temperature):
     )
 
 MAP_LLM_TYPE_TO_CHAT_MODEL = {
+    "openai": init_openai_chat,
     "ollama": init_ollama_chat,
 }
 

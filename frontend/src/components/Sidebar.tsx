@@ -12,9 +12,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   
   const tabs = [
     { id: 'chat', label: 'Chat', icon: MessageSquare },
-    { id: 'upload', label: 'Tải lên', icon: Upload },
+    // { id: 'upload', label: 'Tải lên', icon: Upload },
     { id: 'collections', label: 'Bộ sưu tập', icon: Database },
-    { id: 'graph', label: 'Knowledge Graph', icon: GitBranch },
+    // { id: 'graph', label: 'Knowledge Graph', icon: GitBranch },
     { id: 'settings', label: 'Cài đặt', icon: Settings },
   ];
 
