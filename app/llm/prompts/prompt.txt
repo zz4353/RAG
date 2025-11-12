@@ -14,11 +14,7 @@ Documents:
 User Question: {{ question }}
 
 Instructions:
-<<<<<<< HEAD
 1. Answer in Vietnamese in a concise, to-the-point manner.
-=======
-1. Answer entirely in Vietnamese.
->>>>>>> 2c7eeabc432ae08243311cc416c84c649a91e985
 2. Use the documents primarily, but you may make light, reasonable inferences or comparisons if helpful for the customer.
 3. Do not fabricate any specifications, prices, or claims.
 4. If the documents do not contain a direct answer, provide the closest relevant information and clarify that it is based on related data.
