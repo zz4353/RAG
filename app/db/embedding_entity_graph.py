@@ -22,7 +22,7 @@ class EmbeddingEntityGraph(NetworkxEntityGraph):
                 )
                 self.node_set.add(node)
 
-    def get_similar_nodes(self, query, top_k=2, threshold=0.8):
+    def get_similar_nodes(self, query, top_k=1, threshold=0.8):
         result = self.vector_store.search_dense(query, top_k=top_k, threshold=threshold)
         return [item.payload['node'] for item in result]
     
@@ -36,7 +36,7 @@ class EmbeddingEntityGraph(NetworkxEntityGraph):
 
         while queue:
             current, cur_depth = queue.pop(0)
-            if cur_depth >= depth or current in visited:
+            if cur_depth > depth or current in visited:
                 continue
             visited.add(current)
             # Duyệt các node kề (chiều outbound)

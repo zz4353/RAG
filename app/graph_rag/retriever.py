@@ -2,11 +2,16 @@ import json
 from app.llm.chat import ask_llm
 from app.graph_rag.collections import graph
 from app.graph_rag._utils import render_prompt
+from app.lsh import NodeLSHRetriever
+
+lsh_retriever = NodeLSHRetriever(list(graph._graph.nodes()))
 
 def extract_entities(text):
     prompt = render_prompt("prompts/extract_entities.txt", text=text)
     response = ask_llm(prompt)
-    return response.strip() 
+    response = response.replace("```json", "").replace("```", "").strip()
+    response = json.loads(response.strip())
+    return [item['entity'] for item in response]
 
 def search_graph(graph, user_question):
     try:
@@ -14,7 +19,7 @@ def search_graph(graph, user_question):
     except Exception as e:
         print(f"Error extracting entities: {e}")
         return []
-
+    
     if not entities:
         return []
     
@@ -22,7 +27,9 @@ def search_graph(graph, user_question):
     for entity in entities:
         similar_nodes = graph.get_similar_nodes(entity)
         matched_nodes.extend(similar_nodes)
-    
+        similar_nodes_lsh = lsh_retriever.search(entity)
+        matched_nodes.extend(similar_nodes_lsh)
+
     unique_nodes = []
     seen = set()
 
@@ -30,8 +37,6 @@ def search_graph(graph, user_question):
         if node not in seen:
             unique_nodes.append(node)
             seen.add(node)
-    
-    print(f"unique_nodes: {unique_nodes}")
     
     sentences = []
     for node in unique_nodes:

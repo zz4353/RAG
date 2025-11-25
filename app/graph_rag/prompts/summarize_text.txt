@@ -2,6 +2,7 @@ Given the following input text, generate a concise summary that preserves all ke
 - The summary should be short and focus on facts only.  
 - Omit irrelevant details, opinions, or background information.
 - Keep the language neutral and objective.
+- When the text contains pronouns referring to identifiable named entities, replace those pronouns with the original proper noun while keeping the original language and wording.
 - If the text contains lists, processes, or sequences, summarize them clearly.
 - **Always preserve the original language and wording of the input text in the summary. Do not translate,  or switch to a different language.**
 - **Detect the language of the input and enforce output in the same language, even if the input is partially multilingual.
