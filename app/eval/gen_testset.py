@@ -94,7 +94,7 @@ def main():
             "qas": qas,
         })
         print("done")
-        if i == 3:
+        if i == 100:
             break
     # write_jsonl(jsonl_rows, out_json)
     write_json(jsonl_rows, out_json)
