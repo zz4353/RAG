@@ -15,3 +15,6 @@ FlagEmbedding
 fastembed
 underthesea
 numpy
+
+datasketch
+rapidfuzz
