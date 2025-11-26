@@ -15,6 +15,11 @@ FlagEmbedding
 fastembed
 underthesea
 numpy
+<<<<<<< Updated upstream
 
 datasketch
 rapidfuzz
+=======
+ragas==0.36/0.22/0.1.4
+"unstructured[md]"
+>>>>>>> Stashed changes

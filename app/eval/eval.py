@@ -8,7 +8,7 @@ from app.llm.chat import ask_rag
 from app.vector_rag.collections import COLLECTIONS
 from app.vector_rag.indexer import load_and_index_data
 
-from ragas import EvaluationDataset, evaluate
+from ragas import EvaluationDataset, evaluate # ragas 0.36
 from ragas.llms import LangchainLLMWrapper
 from ragas.metrics import (
     Faithfulness,
@@ -95,10 +95,10 @@ def data_constructor(testset_path, option):
         if option == "hybrid":
             answer, contexts = answer_and_contexts_hybrid(question)
         dataset.append({
-            "user_input": question,
-            "retrieved_contexts": contexts,
-            "response": answer,
-            "reference": reference,
+            "question": question,
+            "contexts": contexts,
+            "answer": answer,
+            "ground_truth": reference,
         })
 
     evaluation_dataset = EvaluationDataset.from_list(dataset)
