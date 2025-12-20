@@ -197,7 +197,8 @@ class VectorStore:
         return [item for item, _ in ranked]
     
     def search(self, query, top_k=5, threshold=0.3):
-        results = self.hybrid_search(query, top_k * 2 + 1, threshold)
-        results = self._rerank(query, results, top_k)
+        # results = self.hybrid_search(query, top_k * 2 + 1, threshold)
+        # results = self._rerank(query, results, top_k)
+        results = self.search_dense(query, top_k, threshold)
         return [item.payload for item in results]
     

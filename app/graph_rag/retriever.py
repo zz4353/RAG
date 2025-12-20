@@ -27,8 +27,8 @@ def search_graph(graph, user_question):
     for entity in entities:
         similar_nodes = graph.get_similar_nodes(entity)
         matched_nodes.extend(similar_nodes)
-        similar_nodes_lsh = lsh_retriever.search(entity)
-        matched_nodes.extend(similar_nodes_lsh)
+        # similar_nodes_lsh = lsh_retriever.search(entity)
+        # matched_nodes.extend(similar_nodes_lsh)
 
     unique_nodes = []
     seen = set()
